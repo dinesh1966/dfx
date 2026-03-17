@@ -1,0 +1,2588 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolite</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500&display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500&family=Inter:wght@400;600;700;900&display=swap"
+        rel="stylesheet" />
+    <style>
+        /* ═══════════════════════════════
+           PROJECTS SECTION
+        ═══════════════════════════════ */
+        :root {
+            --accent: white;
+            --p-black: #0a0a0a;
+            --p-white: #f5f5f0;
+            --p-gray: #888;
+        }
+
+        .projects-section {
+            background: var(--p-black);
+            padding: 100px 5vw;
+            font-family: 'DM Sans', sans-serif;
+        }
+
+        .projects-section-header {
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-between;
+            margin-bottom: 60px;
+            border-bottom: 1px solid #222;
+            padding-bottom: 30px;
+        }
+
+        .ps-label {
+            font-size: 11px;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            color: var(--p-gray);
+            margin-bottom: 10px;
+        }
+
+        .ps-title {
+            font-family: 'Bebas Neue', cursive;
+            font-size: clamp(52px, 8vw, 96px);
+            line-height: 0.9;
+            color: var(--p-white);
+        }
+
+        .ps-title span {
+            color: var(--accent);
+        }
+
+        .ps-count {
+            font-family: 'Bebas Neue', cursive;
+            font-size: 96px;
+            line-height: 1;
+            color: #1c1c1c;
+            letter-spacing: -4px;
+        }
+
+        /* ── BENTO GRID ── */
+        .bento-grid {
+            display: grid;
+            grid-template-columns: 1fr 1.15fr 1fr;
+            grid-template-rows: auto auto;
+            gap: 12px;
+        }
+
+        /* card base */
+        .bento-card {
+            position: relative;
+            overflow: hidden;
+            border-radius: 20px;
+            cursor: pointer;
+            background: #111;
+        }
+
+        /* column 1 & 3: two stacked cards */
+        .bento-card.short {
+            aspect-ratio: 4 / 3.2;
+        }
+
+        /* column 2: tall spanning card */
+        .bento-card.tall {
+            grid-row: 1 / 3;
+            aspect-ratio: unset;
+            min-height: 580px;
+        }
+
+        /* B&W → Color on hover */
+        .bento-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            filter: grayscale(100%) brightness(0.75) contrast(1.05);
+            transition: filter 0.65s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+                transform 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        .bento-card:hover img {
+            filter: grayscale(0%) brightness(1) contrast(1);
+            transform: scale(1.05);
+        }
+
+        /* bottom fade */
+        .bento-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top,
+                    rgba(0, 0, 0, 0.75) 0%,
+                    rgba(0, 0, 0, 0.1) 45%,
+                    transparent 100%);
+            pointer-events: none;
+        }
+
+        /* View Casestudy button — bottom left */
+        .btn-casestudy {
+            position: absolute;
+            bottom: 18px;
+            left: 18px;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 13px;
+            font-weight: 400;
+            color: #fff;
+            background: rgba(255, 255, 255, 0.12);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            border-radius: 100px;
+            padding: 10px 20px;
+            cursor: pointer;
+            letter-spacing: 0.3px;
+            transition: background 0.3s, transform 0.3s, opacity 0.3s;
+            opacity: 0;
+            transform: translateY(8px);
+        }
+
+        .bento-card:hover .btn-casestudy {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .btn-casestudy:hover {
+            background: rgba(255, 255, 255, 0.22);
+        }
+
+        .btn-casestudy svg {
+            width: 14px;
+            height: 14px;
+            stroke: #fff;
+            fill: none;
+            stroke-width: 2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            flex-shrink: 0;
+        }
+
+        /* About Me pill — middle card top right */
+        .about-pill {
+            position: absolute;
+            top: 18px;
+            right: 18px;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 13px;
+            font-weight: 500;
+            color: #fff;
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.22);
+            border-radius: 100px;
+            padding: 10px 22px;
+            pointer-events: none;
+        }
+
+        /* FOOTER */
+        .ps-footer {
+            margin-top: 50px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .btn-all-work {
+            font-family: 'Bebas Neue', cursive;
+            font-size: 18px;
+            letter-spacing: 4px;
+            color: var(--p-white);
+            background: transparent;
+            border: 1px solid #333;
+            padding: 18px 60px;
+            cursor: pointer;
+            text-transform: uppercase;
+            transition: background 0.3s, color 0.3s, border-color 0.3s;
+        }
+
+        .btn-all-work:hover {
+            background: var(--accent);
+            color: var(--p-black);
+            border-color: var(--accent);
+        }
+
+        @media (max-width: 768px) {
+            .bento-grid {
+                grid-template-columns: 1fr 1fr;
+                grid-template-rows: auto;
+            }
+
+            .bento-card.tall {
+                grid-row: auto;
+                grid-column: 1 / -1;
+                min-height: 360px;
+            }
+
+            .ps-count {
+                font-size: 56px;
+            }
+
+            .projects-section-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .bento-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        #testimonials {
+            position: relative;
+            background: #0a0a0a;
+        }
+
+        .testi-header {
+            max-width: 1480px;
+            margin: 0 auto;
+            padding: 100px 60px 60px;
+            position: relative;
+            z-index: 20;
+        }
+
+        .testi-section-label {
+            font-size: 11px;
+            font-weight: 500;
+            letter-spacing: .18em;
+            text-transform: uppercase;
+            color: rgba(255, 255, 255, 0.45);
+            margin-bottom: 18px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .testi-section-label::before {
+            content: '©';
+            color: white;
+        }
+
+        .testi-section-title {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: clamp(52px, 7vw, 96px);
+            line-height: .95;
+            letter-spacing: .02em;
+            text-transform: uppercase;
+            color: #fff;
+        }
+
+        .testi-section-title .accent {
+            color: white;
+        }
+
+        .testi-sticky {
+            position: sticky;
+            top: 0;
+            height: 100vh;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        /* Top & Bottom Fade Overlays */
+        .testi-sticky::before,
+        .testi-sticky::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            right: 0;
+            height: 15vh;
+            z-index: 15;
+            pointer-events: none;
+        }
+
+        .testi-sticky::before {
+            top: 0;
+            background: linear-gradient(to bottom, #0a0a0a 0%, transparent 100%);
+        }
+
+        .testi-sticky::after {
+            bottom: 0;
+            background: linear-gradient(to top, #0a0a0a 0%, transparent 100%);
+        }
+
+        .testi-bg {
+            position: absolute;
+            top: 50%;
+            left: 0;
+            transform: translateY(-50%);
+            white-space: nowrap;
+            pointer-events: none;
+            user-select: none;
+            will-change: transform;
+            display: flex;
+            align-items: center;
+            gap: 60px;
+            padding: 0 60px;
+            z-index: 0;
+        }
+
+        .testi-bg-word {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: clamp(130px, 15vw, 210px);
+            line-height: 1;
+            text-transform: uppercase;
+            letter-spacing: .02em;
+            color: rgba(255, 255, 255, 0.04);
+            -webkit-text-stroke: 1.5px rgba(255, 255, 255, 0.08);
+        }
+
+        .testi-bg-word.outline {
+            color: transparent;
+            -webkit-text-stroke: 1.5px rgba(255, 255, 255, 0.1);
+        }
+
+        .testi-bg-dot {
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background: #e8ff47;
+            opacity: 0.22;
+            flex-shrink: 0;
+        }
+
+        .testi-grid {
+            position: absolute;
+            inset: 0;
+            z-index: 2;
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            pointer-events: none;
+        }
+
+        .testi-slot {
+            position: absolute;
+            display: flex;
+            flex-direction: column;
+            pointer-events: auto;
+        }
+
+        .slot-tl {
+            top: 40px;
+            left: 40px;
+        }
+
+        .slot-br {
+            bottom: 40px;
+            right: 40px;
+        }
+
+
+
+        .t-card {
+            width: 100%;
+            max-width: 380px;
+            background: rgba(11, 11, 11, 0.95);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 24px;
+            padding: 56px 40px;
+            min-height: 450px;
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            opacity: 0;
+            transform: translateY(110px);
+            transition: opacity .75s cubic-bezier(0.22, 1, 0.36, 1), transform .85s cubic-bezier(0.22, 1, 0.36, 1), border-color .35s;
+            will-change: transform, opacity;
+        }
+
+        .t-card.in {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .t-card.out {
+            opacity: 0;
+            transform: translateY(-80px);
+            transition: opacity .5s cubic-bezier(0.22, 1, 0.36, 1), transform .6s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+
+        .t-card:hover {
+            border-color: rgba(232, 255, 71, 0.22);
+        }
+
+        .testi-slot .t-card {
+            transition-delay: 0s;
+        }
+
+        .testi-slot:nth-child(2) .t-card.out {
+            transition-delay: 0s;
+        }
+
+        .testi-counter {
+            position: absolute;
+            top: 32px;
+            right: 60px;
+            z-index: 10;
+            font-family: 'Inter', sans-serif;
+            font-size: 12px;
+            font-weight: 600;
+            color: rgba(255, 255, 255, 0.4);
+            letter-spacing: .08em;
+        }
+
+        .testi-counter b {
+            color: #e8ff47;
+        }
+
+        .t-top {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            margin-bottom: 20px;
+        }
+
+        .t-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #2a2a2a, #181818);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            flex-shrink: 0;
+            overflow: hidden;
+        }
+
+        .t-info {
+            flex: 1;
+        }
+
+        .t-name {
+            font-size: 14px;
+            font-weight: 600;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .t-verified {
+            width: 15px;
+            height: 15px;
+            background: #1d9bf0;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 8px;
+            color: #fff;
+            flex-shrink: 0;
+        }
+
+        .t-role {
+            font-size: 11px;
+            color: rgba(255, 255, 255, 0.45);
+            margin-top: 2px;
+        }
+
+        .t-logo {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 20px;
+            letter-spacing: .04em;
+            color: rgba(255, 255, 255, 0.14);
+            flex-shrink: 0;
+        }
+
+        .t-quote {
+            font-size: 14px;
+            line-height: 1.8;
+            color: rgba(255, 255, 255, 0.75);
+            position: relative;
+            padding-left: 18px;
+            margin-bottom: 22px;
+        }
+
+        .t-quote::before {
+            content: '\201C';
+            position: absolute;
+            left: 0;
+            top: -8px;
+            font-family: 'Inter', sans-serif;
+            font-size: 40px;
+            font-weight: 900;
+            color: #e8ff47;
+            line-height: 1;
+            opacity: .7;
+        }
+
+        .t-footer {
+            padding-top: 16px;
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .t-stars {
+            display: flex;
+            gap: 2px;
+        }
+
+        .t-star {
+            color: #e8ff47;
+            font-size: 11px;
+        }
+
+        .t-tag {
+            font-size: 9px;
+            font-weight: 600;
+            letter-spacing: .12em;
+            text-transform: uppercase;
+            background: rgba(232, 255, 71, 0.07);
+            border: 1px solid rgba(232, 255, 71, 0.18);
+            padding: 4px 10px;
+            border-radius: 100px;
+            color: #e8ff47;
+        }
+
+        @media (max-width: 768px) {
+            .testi-header {
+                padding: 70px 24px 40px;
+            }
+
+            .testi-grid {
+                grid-template-columns: 1fr;
+                padding: 0 24px;
+            }
+
+            .testi-slot:nth-child(2) .t-card {
+                margin-top: 0;
+            }
+
+            .testi-counter {
+                right: 24px;
+            }
+        }
+
+        /* ── TESTIMONIALS CTA ── */
+        .testi-cta {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 25;
+            padding: 12px 28px;
+            font-size: 13px;
+            min-width: 160px;
+            transition: all 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+
+        .testi-cta:hover {
+            transform: translate(-50%, -50%) scale(1.05);
+        }
+
+        @media (max-width: 768px) {
+            .testi-cta {
+                top: 50%;
+                bottom: auto;
+                padding: 10px 24px;
+                font-size: 12px;
+            }
+        }
+
+        /* ═══ SERVICES SECTION (ACCORDION MODEL) ═══ */
+        #services-section {
+            background: #000;
+            padding: 120px 0;
+            color: #fff;
+            cursor: default;
+            position: relative;
+        }
+
+        #services-section * {
+            cursor: default;
+        }
+
+        .services-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 60px;
+            position: relative;
+        }
+
+        .services-title .accent {
+            color: transparent;
+            -webkit-text-stroke: 1.5px rgba(255, 255, 255, 0.2);
+        }
+
+        .service-preview-wrap {
+            position: absolute;
+            top: 0;
+            left: 60px;
+            width: calc(23%);
+            /* Visual match for the 1.2fr gap */
+            max-width: 380px;
+            height: 0;
+            /* Dynamic */
+            border-radius: 12px;
+            overflow: hidden;
+            opacity: 0;
+            transform: scale(0.95);
+            transition: opacity 0.4s ease, transform 0.4s ease, top 0.5s cubic-bezier(0.16, 1, 0.3, 1), height 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+            pointer-events: none;
+            z-index: 5;
+        }
+
+        .service-preview-wrap.active {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        .service-preview-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .services-list {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .row-divider {
+            grid-column: 2 / -1;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            height: 1px;
+            width: 100%;
+        }
+
+        .services-header-row {
+            display: grid;
+            grid-template-columns: 1.2fr 80px 1.5fr 2fr;
+            gap: 20px;
+            padding: 20px 0 0 0;
+            margin-bottom: 10px;
+        }
+
+        .header-label {
+            font-family: 'Inter', sans-serif;
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: rgba(255, 255, 255, 0.4);
+        }
+
+        .header-label.brand {
+            font-size: 18px;
+            color: #fff;
+            letter-spacing: -0.02em;
+        }
+
+        .service-item {
+            display: grid;
+            grid-template-columns: 1.2fr 80px 1.5fr 2fr;
+            gap: 20px;
+            padding: 25px 0 0 0;
+            transition: all 0.4s ease;
+            align-items: center;
+        }
+
+        .service-num {
+            grid-column: 2;
+        }
+
+        .service-title {
+            grid-column: 3;
+        }
+
+        .service-desc {
+            grid-column: 4;
+        }
+
+        .service-item:hover {
+            background: rgba(255, 255, 255, 0.02);
+        }
+
+        .service-num {
+            font-family: 'Inter', sans-serif;
+            font-size: 16px;
+            font-weight: 700;
+            color: #fff;
+            opacity: 0.8;
+        }
+
+        .service-title {
+            font-family: 'Bebas Neue', cursive;
+            font-size: clamp(32px, 4vw, 42px);
+            font-weight: 400;
+            color: #fff;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .service-desc {
+            font-size: 16px;
+            line-height: 1.6;
+            color: rgba(255, 255, 255, 0.5);
+            max-width: 600px;
+            justify-self: end;
+        }
+
+        @media (max-width: 1024px) {
+
+            .services-header-row,
+            .service-preview-wrap {
+                display: none;
+            }
+
+            .service-item {
+                grid-template-columns: 60px 1fr;
+                gap: 20px;
+                align-items: start;
+            }
+
+            .service-num,
+            .service-title,
+            .service-desc {
+                grid-column: auto;
+            }
+
+            .service-desc {
+                grid-column: 2;
+                justify-self: start;
+                max-width: 100%;
+            }
+        }
+
+
+
+        @media (max-width: 768px) {
+            .services-title {
+                font-size: 56px;
+                text-align: center;
+            }
+
+            .services-subtitle {
+                text-align: center;
+                margin: 0 auto 40px;
+            }
+
+            .services-container {
+                padding: 0 24px;
+            }
+
+            .services-tags {
+                justify-content: center;
+            }
+        }
+
+        /* ═══ PACKAGES SECTION ═══ */
+        #packages {
+            background: #000;
+            padding: 120px 0;
+            color: #fff;
+        }
+
+        .pkg-grid {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 60px;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+        }
+
+        .pkg-card {
+            background: #0d0d0e;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 24px;
+            padding: 48px;
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1), border-color 0.4s;
+            position: relative;
+        }
+
+        .pkg-card:hover {
+            transform: translateY(-8px);
+            border-color: rgba(255, 255, 255, 0.15);
+        }
+
+        .pkg-name-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 24px;
+        }
+
+        .pkg-name {
+            font-size: 20px;
+            font-weight: 500;
+            color: #fff;
+        }
+
+        .pkg-badge {
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: #fff;
+            padding: 6px 14px;
+            border-radius: 100px;
+            font-size: 13px;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        /* Pricing Toggle */
+        .pricing-toggle-wrap {
+            display: inline-flex;
+            background: rgba(255, 255, 255, 0.04);
+            padding: 4px;
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            margin-bottom: 32px;
+            align-self: flex-start;
+        }
+
+        .toggle-btn {
+            padding: 10px 20px;
+            font-size: 14px;
+            font-weight: 500;
+            color: rgba(255, 255, 255, 0.5);
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s;
+            border-radius: 8px;
+        }
+
+        .toggle-btn.active {
+            background: #fff;
+            color: #000;
+        }
+
+        .pkg-price-wrap {
+            display: flex;
+            align-items: baseline;
+            gap: 4px;
+            margin-bottom: 32px;
+        }
+
+        .pkg-currency {
+            font-size: 32px;
+            font-weight: 600;
+            color: #fff;
+        }
+
+        .pkg-amount {
+            font-size: 72px;
+            font-weight: 600;
+            color: #fff;
+            letter-spacing: -2px;
+        }
+
+        .pkg-period {
+            font-size: 16px;
+            color: rgba(255, 255, 255, 0.4);
+        }
+
+        .btn-pkg-main {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            width: 100%;
+            padding: 18px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: rgba(255, 255, 255, 0.02);
+            color: #fff;
+            border-radius: 14px;
+            font-size: 16px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            margin-bottom: 40px;
+        }
+
+        .btn-pkg-main:hover {
+            background: #fff;
+            color: #000;
+        }
+
+        .pkg-included-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            padding-top: 32px;
+            border-top: 1px dashed rgba(255, 255, 255, 0.1);
+        }
+
+        .pkg-included-item {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            font-size: 15px;
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .pkg-included-item svg {
+            width: 18px;
+            height: 18px;
+            color: rgba(255, 255, 255, 0.4);
+            flex-shrink: 0;
+        }
+
+        @media (max-width: 1024px) {
+            .pkg-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .pkg-grid {
+                grid-template-columns: 1fr;
+                padding: 0 24px;
+            }
+
+            .pkg-card {
+                padding: 32px;
+            }
+
+            .pkg-name {
+                font-size: 20px;
+            }
+        }
+
+
+        .reveal-blur.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* ── FOOTER STYLE ── */
+        .main-footer {
+            background: #080808;
+            padding: 100px 5vw 40px;
+            border-top: 1px solid #111;
+            margin-top: 100px;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr;
+            gap: 60px;
+            margin-bottom: 80px;
+        }
+
+        .footer-brand .footer-logo {
+            height: 60px;
+            opacity: 0.9;
+            margin-bottom: 24px;
+        }
+
+        .footer-tagline {
+            color: #666;
+            font-size: 16px;
+            max-width: 300px;
+            line-height: 1.6;
+            margin-bottom: 30px;
+        }
+
+        .footer-socials {
+            display: flex;
+            gap: 15px;
+        }
+
+        .social-link {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: #111;
+            border: 1px solid #222;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #888;
+            transition: all 0.3s;
+            text-decoration: none;
+        }
+
+        .social-link:hover {
+            color: #fff;
+            border-color: #444;
+            transform: translateY(-3px);
+        }
+
+        .footer-col-title {
+            font-family: 'Bebas Neue', cursive;
+            font-size: 20px;
+            color: #fff;
+            letter-spacing: 1px;
+            margin-bottom: 30px;
+            text-transform: uppercase;
+        }
+
+        .footer-links {
+            list-style: none;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .footer-links a {
+            color: #666;
+            text-decoration: none;
+            font-size: 14px;
+            transition: color 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: #fff;
+        }
+
+        .footer-bottom {
+            border-top: 1px solid #111;
+            padding-top: 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: #444;
+            font-size: 12px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .footer-legal {
+            display: flex;
+            gap: 30px;
+        }
+
+        .footer-legal a {
+            color: #444;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-legal a:hover {
+            color: #888;
+        }
+
+        @media (max-width: 900px) {
+            .footer-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .footer-brand {
+                grid-column: 1 / -1;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .footer-grid {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+
+            .footer-bottom {
+                flex-direction: column;
+                gap: 20px;
+                text-align: center;
+            }
+        }
+
+        /* ── BOOKING MODAL ── */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 2000;
+            display: none;
+            /* Initially hidden */
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+            opacity: 1;
+        }
+
+        .modal-container {
+            background: #111;
+            border: 1px solid #222;
+            width: 95vw;
+            max-width: 1100px;
+            height: 85vh;
+            border-radius: 24px;
+            display: flex;
+            overflow: hidden;
+            position: relative;
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.5);
+            transform: scale(0.95);
+            transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+
+        .modal-overlay.active .modal-container {
+            transform: scale(1);
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 24px;
+            right: 24px;
+            background: #222;
+            border: none;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            color: #fff;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 10;
+            transition: background 0.3s;
+        }
+
+        .modal-close:hover {
+            background: #333;
+        }
+
+        /* Modal Steps */
+        .modal-step {
+            display: none;
+            width: 100%;
+            height: 100%;
+        }
+
+        .modal-step.active {
+            display: flex;
+        }
+
+        /* STEP 1: CALENDAR VIEW */
+        .calendar-sidebar {
+            width: 280px;
+            padding: 40px;
+            border-right: 1px solid #222;
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+
+        .cal-profile img {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            margin-bottom: 20px;
+        }
+
+        .cal-user {
+            font-weight: 700;
+            font-size: 14px;
+            color: #888;
+            margin-bottom: 8px;
+            display: block;
+        }
+
+        .cal-title {
+            font-family: 'Bebas Neue', cursive;
+            font-size: 32px;
+            color: #fff;
+            line-height: 1;
+            margin-bottom: 12px;
+        }
+
+        .cal-desc {
+            color: #666;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        .cal-info-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: #888;
+            font-size: 13px;
+            margin-top: 10px;
+        }
+
+        .calendar-main {
+            flex: 1;
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .cal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .cal-month {
+            font-family: 'Bebas Neue', cursive;
+            font-size: 24px;
+            color: #fff;
+        }
+
+        .cal-nav {
+            display: flex;
+            gap: 10px;
+        }
+
+        .cal-nav-btn {
+            background: none;
+            border: none;
+            color: #888;
+            cursor: pointer;
+            padding: 5px;
+        }
+
+        .cal-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 8px;
+            margin-bottom: 20px;
+        }
+
+        .cal-day-label {
+            text-align: center;
+            font-size: 11px;
+            font-weight: 700;
+            color: #444;
+            text-transform: uppercase;
+            margin-bottom: 15px;
+        }
+
+        .cal-day {
+            aspect-ratio: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #1a1a1a;
+            border-radius: 8px;
+            font-size: 14px;
+            color: #fff;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .cal-day:hover:not(.empty):not(.past) {
+            background: #333;
+        }
+
+        .cal-day.active {
+            background: #fff !important;
+            color: #000;
+            font-weight: 700;
+        }
+
+        .cal-day.empty {
+            background: transparent;
+            cursor: default;
+        }
+
+        .cal-day.today {
+            border: 1px solid #fff;
+        }
+
+        .cal-day.past {
+            opacity: 0.2;
+            cursor: default;
+            pointer-events: none;
+            text-decoration: line-through;
+        }
+
+        .calendar-slots {
+            width: 240px;
+            padding: 40px 24px;
+            border-left: 1px solid #222;
+            overflow-y: auto;
+        }
+
+        .slot-title {
+            font-family: 'Bebas Neue', cursive;
+            font-size: 18px;
+            color: #fff;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+        }
+
+        .slots-list {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .slot-btn {
+            background: #1a1a1a;
+            border: 1px solid #222;
+            color: #fff;
+            padding: 12px;
+            border-radius: 10px;
+            text-align: center;
+            font-size: 14px;
+            cursor: pointer;
+            transition: border-color 0.3s, background 0.3s;
+        }
+
+        .slot-btn:hover {
+            border-color: #555;
+            background: #222;
+        }
+
+        .slot-btn.active {
+            background: #fff;
+            color: #000;
+            border-color: #fff;
+        }
+
+        /* STEP 2: FORM VIEW */
+        .booking-form-wrap {
+            padding: 60px;
+            width: 100%;
+            max-width: 600px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .form-title {
+            font-family: 'Bebas Neue', cursive;
+            font-size: 48px;
+            color: #fff;
+            margin-bottom: 10px;
+        }
+
+        .form-sub {
+            color: #888;
+            font-size: 16px;
+            margin-bottom: 40px;
+        }
+
+        .form-group {
+            margin-bottom: 24px;
+        }
+
+        .form-label {
+            display: block;
+            font-size: 13px;
+            color: #888;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .form-input {
+            width: 100%;
+            background: #1a1a1a;
+            border: 1px solid #222;
+            border-radius: 12px;
+            padding: 16px;
+            color: #fff;
+            font-family: inherit;
+            transition: border-color 0.3s;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: #555;
+        }
+
+        .form-btns {
+            display: flex;
+            gap: 15px;
+            margin-top: 40px;
+        }
+
+        .btn-prev {
+            background: none;
+            border: 1px solid #222;
+            color: #888;
+            padding: 16px 32px;
+            border-radius: 12px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        .btn-next-step {
+            background: #fff;
+            color: #000;
+            border: none;
+            flex: 1;
+            padding: 16px 32px;
+            border-radius: 12px;
+            cursor: pointer;
+            font-weight: 700;
+            transition: transform 0.2s;
+        }
+
+        .btn-next-step:hover {
+            transform: translateY(-2px);
+        }
+
+        @media (max-width: 900px) {
+            .modal-container {
+                flex-direction: column;
+                height: 95vh;
+                padding-top: 60px;
+            }
+
+            .calendar-sidebar {
+                width: 100%;
+                height: auto;
+                padding: 20px;
+                border-right: none;
+                border-bottom: 1px solid #222;
+                flex-direction: row;
+                align-items: center;
+            }
+
+            .cal-profile img {
+                margin-bottom: 0;
+            }
+
+            .calendar-main {
+                padding: 20px;
+            }
+
+            .calendar-slots {
+                width: 100%;
+                height: auto;
+                border-left: none;
+                border-top: 1px solid #222;
+                padding: 20px;
+            }
+
+            .slots-list {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+    </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+</head>
+
+<body>
+
+    <div class="navbar">
+        <a href="#" class="logo">
+            <img src="https://res.cloudinary.com/drkgkgiat/image/upload/v1772543577/Web_logo-02_w0fxrq.png"
+                alt="Portfolio Logo">
+        </a>
+        <ul>
+            <li><a href="#projects">Projects</a></li>
+            <li><a href="#services-section">Services</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="#packages">Packages</a></li>
+            <li><a href="#testimonials">Testimonials</a></li>
+            <li><a href="#contact" class="btn">Contact</a></li>
+        </ul>
+    </div>
+
+    <div class="hero">
+        <img id="reveal-img" src="https://res.cloudinary.com/drkgkgiat/image/upload/v1772543020/FOX-WEB_zyf8cq.gif"
+            alt="" />
+
+        <div class="bg-wrapper">
+            <svg viewBox="0 0 800 600" preserveAspectRatio="xMidYMid slice">
+                <defs>
+                    <filter id="goo">
+                        <feGaussianBlur in="SourceGraphic" stdDeviation="40" result="blur" />
+                        <feColorMatrix in="blur" mode="matrix" values="
+                        1 0 0 0 0
+                        0 1 0 0 0
+                        0 0 1 0 0
+                        0 0 0 20 -10" result="goo" />
+                        <feBlend in="SourceGraphic" in2="goo" />
+                    </filter>
+                </defs>
+                <g filter="url(#goo)">
+                    <circle cx="200" cy="200" r="180" fill="white">
+                        <animate attributeName="cx" values="200;600;400;200" dur="20s" repeatCount="indefinite" />
+                        <animate attributeName="cy" values="200;300;500;200" dur="25s" repeatCount="indefinite" />
+                    </circle>
+                    <circle cx="600" cy="400" r="200" fill="white">
+                        <animate attributeName="cx" values="600;300;500;600" dur="22s" repeatCount="indefinite" />
+                        <animate attributeName="cy" values="400;200;450;400" dur="28s" repeatCount="indefinite" />
+                    </circle>
+                    <circle cx="400" cy="100" r="150" fill="white">
+                        <animate attributeName="cx" values="400;200;600;400" dur="26s" repeatCount="indefinite" />
+                        <animate attributeName="cy" values="100;500;300;100" dur="24s" repeatCount="indefinite" />
+                    </circle>
+                </g>
+            </svg>
+        </div>
+
+        <div class="hero-content">
+            <div class="hero-center">
+                <h1>Branding that you<br>need Indeed</h1>
+                <p>Elevate your brand with custom identity and package design.
+                    Showcase your story through bold visuals and strategic design solutions.</p>
+                <div class="buttons">
+                    <button class="btn">Get Started Now</button>
+                    <a href="#projects" class="btn">See Projects</a>
+                </div>
+                <div class="scroll-indicator">
+                    <span>Scroll down</span>
+                    <div class="line"></div>
+                    <div class="mouse">
+                        <div class="wheel"></div>
+                    </div>
+                    <div class="line"></div>
+                    <span>to see projects</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <section class="logo-marquee">
+        <div class="logo-track">
+            <div class="marquee-logo-text">Oasis</div>
+            <div class="marquee-logo-text">✱ Asterisk</div>
+            <div class="marquee-logo-text">Eooks</div>
+            <div class="marquee-logo-text">Opal</div>
+            <div class="marquee-logo-text">Vektor</div>
+            <div class="marquee-logo-text">Pulse</div>
+            <div class="marquee-logo-text">Lumina</div>
+            <div class="marquee-logo-text">Horizon</div>
+
+            <!-- duplicate for infinite scroll -->
+            <div class="marquee-logo-text">Oasis</div>
+            <div class="marquee-logo-text">✱ Asterisk</div>
+            <div class="marquee-logo-text">Eooks</div>
+            <div class="marquee-logo-text">Opal</div>
+            <div class="marquee-logo-text">Vektor</div>
+            <div class="marquee-logo-text">Pulse</div>
+            <div class="marquee-logo-text">Lumina</div>
+            <div class="marquee-logo-text">Horizon</div>
+        </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════
+         PROJECTS SECTION
+    ═══════════════════════════════════════ -->
+    <section class="projects-section" id="projects">
+
+        <div class="projects-section-header">
+            <div>
+                <p class="ps-label">Selected Work</p>
+                <h2 class="ps-title">MY <span>PROJECTS</span></h2>
+            </div>
+            <div class="ps-count">10</div>
+        </div>
+
+        <!-- ROW 1: 3 columns — left short, center tall (spans 2 rows), right short -->
+        <div class="bento-grid">
+
+            <!-- LEFT COL: 2 stacked cards -->
+            <div class="bento-card short">
+                <img src="https://images.unsplash.com/photo-1526170375885-4d8ecf77b99f?w=800&q=80" alt="Project 1" />
+                <div class="bento-overlay"></div>
+                <button class="btn-casestudy">
+                    View Casestudy
+                    <svg viewBox="0 0 24 24">
+                        <line x1="7" y1="17" x2="17" y2="7" />
+                        <polyline points="7 7 17 7 17 17" />
+                    </svg>
+                </button>
+            </div>
+
+            <!-- CENTER COL: tall card (spans 2 rows) -->
+            <div class="bento-card tall" style="grid-column:2; grid-row:1/3;">
+                <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800&q=80" alt="Project Center" />
+                <div class="bento-overlay"></div>
+                <span class="about-pill">About Me</span>
+                <button class="btn-casestudy">
+                    View Casestudy
+                    <svg viewBox="0 0 24 24">
+                        <line x1="7" y1="17" x2="17" y2="7" />
+                        <polyline points="7 7 17 7 17 17" />
+                    </svg>
+                </button>
+            </div>
+
+            <!-- RIGHT COL: top card -->
+            <div class="bento-card short">
+                <img src="https://images.unsplash.com/photo-1607082348824-0a96f2a4b9da?w=800&q=80" alt="Project 3" />
+                <div class="bento-overlay"></div>
+                <button class="btn-casestudy">
+                    View Casestudy
+                    <svg viewBox="0 0 24 24">
+                        <line x1="7" y1="17" x2="17" y2="7" />
+                        <polyline points="7 7 17 7 17 17" />
+                    </svg>
+                </button>
+            </div>
+
+            <!-- LEFT COL: bottom card -->
+            <div class="bento-card short">
+                <img src="https://images.unsplash.com/photo-1634017839464-5c339ebe3cb4?w=800&q=80" alt="Project 4" />
+                <div class="bento-overlay"></div>
+                <button class="btn-casestudy">
+                    View Casestudy
+                    <svg viewBox="0 0 24 24">
+                        <line x1="7" y1="17" x2="17" y2="7" />
+                        <polyline points="7 7 17 7 17 17" />
+                    </svg>
+                </button>
+            </div>
+
+            <!-- RIGHT COL: bottom card -->
+            <div class="bento-card short">
+                <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&q=80" alt="Project 5" />
+                <div class="bento-overlay"></div>
+                <button class="btn-casestudy">
+                    View Casestudy
+                    <svg viewBox="0 0 24 24">
+                        <line x1="7" y1="17" x2="17" y2="7" />
+                        <polyline points="7 7 17 7 17 17" />
+                    </svg>
+                </button>
+            </div>
+
+        </div>
+
+        <!-- ROW 2 BENTO: second set of 5 -->
+        <div class="bento-grid" style="margin-top:12px;">
+
+            <div class="bento-card short">
+                <img src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=800&q=80" alt="Project 6" />
+                <div class="bento-overlay"></div>
+                <button class="btn-casestudy">
+                    View Casestudy
+                    <svg viewBox="0 0 24 24">
+                        <line x1="7" y1="17" x2="17" y2="7" />
+                        <polyline points="7 7 17 7 17 17" />
+                    </svg>
+                </button>
+            </div>
+
+            <div class="bento-card tall" style="grid-column:2; grid-row:1/3;">
+                <img src="https://images.unsplash.com/photo-1487958449943-2429e8be8625?w=800&q=80" alt="Project 7" />
+                <div class="bento-overlay"></div>
+                <button class="btn-casestudy">
+                    View Casestudy
+                    <svg viewBox="0 0 24 24">
+                        <line x1="7" y1="17" x2="17" y2="7" />
+                        <polyline points="7 7 17 7 17 17" />
+                    </svg>
+                </button>
+            </div>
+
+            <div class="bento-card short">
+                <img src="https://images.unsplash.com/photo-1555774698-0b77e0d5fac6?w=800&q=80" alt="Project 8" />
+                <div class="bento-overlay"></div>
+                <button class="btn-casestudy">
+                    View Casestudy
+                    <svg viewBox="0 0 24 24">
+                        <line x1="7" y1="17" x2="17" y2="7" />
+                        <polyline points="7 7 17 7 17 17" />
+                    </svg>
+                </button>
+            </div>
+
+            <div class="bento-card short">
+                <img src="https://images.unsplash.com/photo-1574717024653-61fd2cf4d44d?w=800&q=80" alt="Project 9" />
+                <div class="bento-overlay"></div>
+                <button class="btn-casestudy">
+                    View Casestudy
+                    <svg viewBox="0 0 24 24">
+                        <line x1="7" y1="17" x2="17" y2="7" />
+                        <polyline points="7 7 17 7 17 17" />
+                    </svg>
+                </button>
+            </div>
+
+            <div class="bento-card short">
+                <img src="https://images.unsplash.com/photo-1440404653325-ab127d49abc1?w=800&q=80" alt="Project 10" />
+                <div class="bento-overlay"></div>
+                <button class="btn-casestudy">
+                    View Casestudy
+                    <svg viewBox="0 0 24 24">
+                        <line x1="7" y1="17" x2="17" y2="7" />
+                        <polyline points="7 7 17 7 17 17" />
+                    </svg>
+                </button>
+            </div>
+
+        </div>
+
+        <div class="ps-footer">
+            <button class="btn-all-work">View All Work</button>
+        </div>
+    </section>
+
+    <!-- ═══ SERVICES SECTION (ACCORDION MODEL) ═══ -->
+    <section id="services-section">
+        <div class="services-container">
+            <div class="projects-section-header" style="margin-bottom: 40px;">
+                <div>
+                    <p class="ps-label">Expertise</p>
+                    <h2 class="ps-title">OUR <span>SERVICES</span></h2>
+                </div>
+            </div>
+
+            <!-- Hover Preview Container -->
+            <div class="service-preview-wrap" id="service-preview">
+                <img src="" alt="Service Preview" class="service-preview-img" id="preview-img">
+            </div>
+
+            <div class="services-header-row">
+                <div class="header-label brand">DFX®</div>
+                <div class="header-label" style="grid-column: 3;">Quick Links / Services</div>
+                <div class="header-label" style="grid-column: 4; justify-self: end;">Creative Studio ©2026</div>
+                <div class="row-divider" style="padding-top: 20px;"></div>
+            </div>
+
+            <div class="services-list">
+                <!-- Service 01 -->
+                <div class="service-item"
+                    data-image="https://images.unsplash.com/photo-1581291518655-95245be0567f?q=80&w=2070&auto=format&fit=crop">
+                    <div class="service-num">01</div>
+                    <h3 class="service-title">Web design & Development</h3>
+                    <p class="service-desc">We build modern, responsive websites that deliver exceptional user
+                        experiences.</p>
+                    <div class="row-divider" style="padding-top: 20px;"></div>
+                </div>
+
+                <!-- Service 02 -->
+                <div class="service-item"
+                    data-image="https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=2015&auto=format&fit=crop">
+                    <div class="service-num">02</div>
+                    <h3 class="service-title">Digital Marketing</h3>
+                    <p class="service-desc">Result-driven SEO and ad campaigns to increase visibility and generate
+                        leads.</p>
+                    <div class="row-divider" style="padding-top: 20px;"></div>
+                </div>
+
+                <!-- Service 03 -->
+                <div class="service-item"
+                    data-image="https://images.unsplash.com/photo-1492724441997-5dc865305da7?q=80&w=2070&auto=format&fit=crop">
+                    <div class="service-num">03</div>
+                    <h3 class="service-title">Video Editing</h3>
+                    <p class="service-desc">Professional editing that transforms raw footage into high-quality, engaging
+                        content.</p>
+                    <div class="row-divider" style="padding-top: 20px;"></div>
+                </div>
+
+                <!-- Service 04 -->
+                <div class="service-item"
+                    data-image="https://images.unsplash.com/photo-1551434678-e076c223a692?q=80&w=2070&auto=format&fit=crop">
+                    <div class="service-num">04</div>
+                    <h3 class="service-title">Branding</h3>
+                    <p class="service-desc">Full branding including social management, shoots, and creative script
+                        writing.</p>
+                    <div class="row-divider" style="padding-top: 20px;"></div>
+                </div>
+
+                <!-- Service 05 -->
+                <div class="service-item"
+                    data-image="https://images.unsplash.com/photo-1626785774573-4b799315345d?q=80&w=2071&auto=format&fit=crop">
+                    <div class="service-num">05</div>
+                    <h3 class="service-title">Graphics Design</h3>
+                    <p class="service-desc">Creative logos, business cards, and marketing materials to build your brand
+                        identity.</p>
+                    <div class="row-divider" style="padding-top: 20px;"></div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <section id="packages">
+        <div class="projects-section-header" style="max-width: 1400px; margin: 0 auto 60px; padding: 0 60px;">
+            <div>
+                <p class="ps-label">Pricing</p>
+                <h2 class="ps-title">CHOOSE YOUR <span>PLAN</span></h2>
+            </div>
+        </div>
+
+        <div class="pkg-grid">
+
+            <!-- Starter -->
+            <div class="pkg-card" data-monthly="500" data-quarterly="1500">
+                <div class="pkg-name-row">
+                    <h3 class="pkg-name">Starter</h3>
+                </div>
+
+                <div class="pricing-toggle-wrap">
+                    <button class="toggle-btn" data-type="monthly">Monthly</button>
+                    <button class="toggle-btn active" data-type="quarterly">Quarterly</button>
+                </div>
+
+                <div class="pkg-price-wrap">
+                    <span class="pkg-currency">₹</span>
+                    <span class="pkg-amount">1500</span>
+                    <span class="pkg-period">/ quarter</span>
+                </div>
+                <a href="#contact" class="btn-pkg-main">
+                    Get Started
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="7" y1="17" x2="17" y2="7" />
+                        <polyline points="7 7 17 7 17 17" />
+                    </svg>
+                </a>
+                <ul class="pkg-included-list">
+                    <li class="pkg-included-item">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"
+                            stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="20 6 9 17 4 12"></polyline>
+                        </svg>
+                        3 Automated Workflows
+                    </li>
+                    <li class="pkg-included-item">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"
+                            stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="20 6 9 17 4 12"></polyline>
+                        </svg>
+                        Basic AI Assistant Access
+                    </li>
+                    <li class="pkg-included-item">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"
+                            stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="20 6 9 17 4 12"></polyline>
+                        </svg>
+                        Email + Slack Integration
+                    </li>
+                    <li class="pkg-included-item">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"
+                            stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="20 6 9 17 4 12"></polyline>
+                        </svg>
+                        Monthly Performance Reports
+                    </li>
+                    <li class="pkg-included-item">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"
+                            stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="20 6 9 17 4 12"></polyline>
+                        </svg>
+                        Email Support
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Pro -->
+            <div class="pkg-card" data-monthly="600" data-quarterly="6000">
+                <div class="pkg-name-row">
+                    <h3 class="pkg-name">Pro</h3>
+                    <div class="pkg-badge">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <path d="M12 2c0 10-4 12-4 12s2 0 4-2 4 2 4 2-4-2-4-12z" />
+                        </svg>
+                        Popular
+                    </div>
+                </div>
+
+                <div class="pricing-toggle-wrap">
+                    <button class="toggle-btn" data-type="monthly">Monthly</button>
+                    <button class="toggle-btn active" data-type="quarterly">Quarterly</button>
+                </div>
+
+                <div class="pkg-price-wrap">
+                    <span class="pkg-currency">₹</span>
+                    <span class="pkg-amount">6000</span>
+                    <span class="pkg-period">/ quarter</span>
+                </div>
+                <a href="#contact" class="btn-pkg-main" style="background: #fff; color: #000;">
+                    Get Started
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="7" y1="17" x2="17" y2="7" />
+                        <polyline points="7 7 17 7 17 17" />
+                    </svg>
+                </a>
+                <ul class="pkg-included-list">
+                    <li class="pkg-included-item">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"
+                            stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="20 6 9 17 4 12"></polyline>
+                        </svg>
+                        10+ Automated Workflows
+                    </li>
+                    <li class="pkg-included-item">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"
+                            stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="20 6 9 17 4 12"></polyline>
+                        </svg>
+                        Advanced AI Assistant Features
+                    </li>
+                    <li class="pkg-included-item">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"
+                            stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="20 6 9 17 4 12"></polyline>
+                        </svg>
+                        Bi-Weekly Strategy Reviews
+                    </li>
+                    <li class="pkg-included-item">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"
+                            stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="20 6 9 17 4 12"></polyline>
+                        </svg>
+                        CRM + Marketing Tool Integrations
+                    </li>
+                    <li class="pkg-included-item">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"
+                            stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="20 6 9 17 4 12"></polyline>
+                        </svg>
+                        Priority Support
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Enterprise -->
+            <div class="pkg-card">
+                <div class="pkg-name-row">
+                    <h3 class="pkg-name">Enterprise</h3>
+                </div>
+                <div class="pkg-price-wrap">
+                    <span class="pkg-amount" style="font-size: 52px; margin-top: 10px;">Custom</span>
+                </div>
+                <a href="#contact" class="btn-pkg-main">
+                    Book a Call
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="7" y1="17" x2="17" y2="7" />
+                        <polyline points="7 7 17 7 17 17" />
+                    </svg>
+                </a>
+                <ul class="pkg-included-list">
+                    <li class="pkg-included-item">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"
+                            stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="20 6 9 17 4 12"></polyline>
+                        </svg>
+                        Unlimited Custom Workflows
+                    </li>
+                    <li class="pkg-included-item">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"
+                            stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="20 6 9 17 4 12"></polyline>
+                        </svg>
+                        Dedicated AI Strategist
+                    </li>
+                    <li class="pkg-included-item">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"
+                            stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="20 6 9 17 4 12"></polyline>
+                        </svg>
+                        API & Private Integrations
+                    </li>
+                    <li class="pkg-included-item">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"
+                            stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="20 6 9 17 4 12"></polyline>
+                        </svg>
+                        Real-Time Performance Dashboards
+                    </li>
+                    <li class="pkg-included-item">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"
+                            stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="20 6 9 17 4 12"></polyline>
+                        </svg>
+                        24/7 Premium Support + SLA
+                    </li>
+                </ul>
+            </div>
+
+        </div>
+    </section>
+
+    <div id="testimonials" class="reveal-up">
+        <div class="testi-header">
+            <p class="testi-section-label">Client Words</p>
+            <h2 class="testi-section-title">KIND <span class="accent">WORDS</span></h2>
+        </div>
+        <div class="testi-sticky" id="testiSticky">
+            <button class="btn testi-cta">Get in touch</button>
+            <div class="testi-bg" id="testiBg">
+                <span class="testi-bg-word">Reviews</span><span class="testi-bg-dot"></span>
+                <span class="testi-bg-word outline">Testimonials</span><span class="testi-bg-dot"></span>
+                <span class="testi-bg-word">Client Love</span><span class="testi-bg-dot"></span>
+                <span class="testi-bg-word outline">Reviews</span><span class="testi-bg-dot"></span>
+                <span class="testi-bg-word">Testimonials</span>
+            </div>
+            <div class="testi-counter">Step <b id="stepNum">1</b> / 3</div>
+            <div class="testi-grid">
+                <div class="testi-slot slot-tl" id="slotTL"></div>
+                <div class="testi-slot slot-br" id="slotBR"></div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- CURSOR REVEAL JS -->
+    <script>
+        (function () {
+            var hero = document.querySelector('.hero');
+            var img = document.getElementById('reveal-img');
+            var curX = -9999, curY = -9999;
+            var tarX = -9999, tarY = -9999;
+            var inside = false;
+
+            hero.addEventListener('mousemove', function (e) {
+                var r = hero.getBoundingClientRect();
+                tarX = e.clientX - r.left;
+                tarY = e.clientY - r.top;
+                inside = true;
+            });
+            hero.addEventListener('mouseleave', function () { inside = false; });
+
+            (function loop() {
+                requestAnimationFrame(loop);
+                curX += (tarX - curX) * 0.10;
+                curY += (tarY - curY) * 0.10;
+                if (!inside) {
+                    img.style.setProperty('--mx', '-9999px');
+                    img.style.setProperty('--my', '-9999px');
+                    return;
+                }
+                img.style.setProperty('--mx', curX.toFixed(1) + 'px');
+                img.style.setProperty('--my', curY.toFixed(1) + 'px');
+            })();
+        })();
+        const CARDS = [
+            { avatar: '🧑‍💼', name: 'Julian Pierce', verified: true, role: 'Director, Vektor Inc.', logo: 'Cairo', quote: 'Working together felt like bringing on a creative partner who truly understood our goals. Transformed raw ideas into something stunning.', tag: 'Brand Identity' },
+            { avatar: '👩‍🎨', name: 'Hana Samoto', verified: true, role: 'CEO, Willow Studio', logo: 'Cairo', quote: 'Brings a rare balance of creativity and discipline. Fast without sacrificing detail. Process is intentional, communication always clear.', tag: 'Dashboard Redesign' },
+            { avatar: '👨‍💻', name: 'James Wei', verified: true, role: 'CTO, Nexaflow', logo: 'Nexaflow', quote: 'Delivered a complex web app in record time. Code is clean, animations buttery smooth. Our users absolutely love it.', tag: 'SaaS Web App' },
+            { avatar: '🧕', name: 'Sara Okonkwo', verified: true, role: 'Product Lead, Verse', logo: 'Verse', quote: 'The motion design brought our onboarding to life. Completion rates jumped 40% after launch. Would work with this team again without hesitation.', tag: 'Motion Design' },
+            { avatar: '👨‍🏫', name: 'Marco Ricci', verified: true, role: 'Director, Forma Agency', logo: 'Forma', quote: 'Brand identity exceeded all expectations. Customers immediately noticed — it felt premium, fresh, and unmistakably us.', tag: 'Portfolio Site' },
+            { avatar: '👩‍💼', name: 'Priya Sharma', verified: true, role: 'Founder, Bloom Co.', logo: 'Bloom', quote: 'The redesign transformed how our customers see us. Polished, modern, and completely on-brand. Delivered beyond what we hoped for.', tag: 'UX Redesign' }
+        ];
+
+        const STEPS = 3;
+        const STEP_HEIGHT = window.innerHeight * 0.9;
+        const testiSection = document.getElementById('testimonials');
+        testiSection.style.height = (STEPS * STEP_HEIGHT + window.innerHeight) + 'px';
+
+
+        function cardHTML(data) {
+            const stars = '★★★★★'.split('').map(s => `<span class="t-star">${s}</span>`).join('');
+            return `<div class="t-card">
+      <div class="t-top">
+        <div class="t-avatar">${data.avatar}</div>
+        <div class="t-info">
+          <div class="t-name">${data.name}${data.verified ? '<span class="t-verified">✓</span>' : ''}</div>
+          <div class="t-role">${data.role}</div>
+        </div>
+        <div class="t-logo">${data.logo}</div>
+      </div>
+      <p class="t-quote">${data.quote}</p>
+      <div class="t-footer">
+        <div class="t-stars">${stars}</div>
+        <span class="t-tag">${data.tag}</span>
+      </div>
+    </div>`;
+        }
+
+        const slotTL = document.getElementById('slotTL');
+        const slotBR = document.getElementById('slotBR');
+        const stepNumEl = document.getElementById('stepNum');
+        const testiBg = document.getElementById('testiBg');
+        let currentStep = -1;
+
+        function showStep(step) {
+            if (step === currentStep) return;
+            const slots = [slotTL, slotBR];
+
+            slots.forEach(s => {
+                s.querySelectorAll('.t-card').forEach(c => {
+                    c.classList.remove('in');
+                    c.classList.add('out');
+                });
+            });
+
+            setTimeout(() => {
+                slots.forEach(s => s.innerHTML = '');
+
+                // Step distribution for 6 cards (0-1, 2-3, 4-5)
+                const i0 = step * 2;
+                const i1 = step * 2 + 1;
+
+                if (i0 < CARDS.length) slotTL.innerHTML = cardHTML(CARDS[i0]);
+                if (i1 < CARDS.length) slotBR.innerHTML = cardHTML(CARDS[i1]);
+
+                requestAnimationFrame(() => requestAnimationFrame(() => {
+                    slots.forEach(s => {
+                        s.querySelectorAll('.t-card').forEach(c => c.classList.add('in'));
+                    });
+                }));
+            }, currentStep === -1 ? 0 : 300);
+            stepNumEl.textContent = step + 1;
+            currentStep = step;
+        }
+
+        function onScroll() {
+            const rect = testiSection.getBoundingClientRect();
+            const scrolled = -rect.top;
+            if (scrolled < 0) return;
+            const step = Math.min(Math.floor(scrolled / STEP_HEIGHT), STEPS - 1);
+            showStep(step);
+            testiBg.style.transform = `translateY(-50%) translateX(${-scrolled * 0.08}px)`;
+        }
+
+        window.addEventListener('scroll', onScroll, { passive: true });
+        showStep(0);
+    </script>
+    <script>
+
+
+
+        // ════ SERVICES HOVER IMAGE LOGIC ════
+        const serviceRows = document.querySelectorAll('.service-item');
+        const previewWrap = document.getElementById('service-preview');
+        const previewImg = document.getElementById('preview-img');
+
+        serviceRows.forEach(row => {
+            row.addEventListener('mouseenter', () => {
+                const imgUrl = row.dataset.image;
+                if (imgUrl) {
+                    previewImg.src = imgUrl;
+
+                    // Dynamic Positioning
+                    const rect = row.getBoundingClientRect();
+                    const containerRect = row.closest('.services-container').getBoundingClientRect();
+                    const relativeTop = rect.top - containerRect.top;
+
+                    previewWrap.style.top = `${relativeTop}px`;
+                    previewWrap.style.height = `${row.offsetHeight}px`;
+                    previewWrap.classList.add('active');
+                }
+            });
+
+            row.addEventListener('mouseleave', () => {
+                previewWrap.classList.remove('active');
+            });
+        });
+
+        // ════ DYNAMIC DATE FOR SLOTS ════
+        const slotDate = document.getElementById('current-slot-date');
+        if (slotDate) {
+            const now = new Date();
+            const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+            const currentMonth = monthNames[now.getMonth()];
+            const currentYear = now.getFullYear().toString().slice(-2);
+            slotDate.textContent = `${currentMonth}'${currentYear}`;
+        }
+    </script>
+
+    <!-- PRICING TOGGLE JS -->
+    <script>
+        (function () {
+            const allToggles = document.querySelectorAll('.pricing-toggle-wrap');
+
+            allToggles.forEach(wrap => {
+                const btns = wrap.querySelectorAll('.toggle-btn');
+                const card = wrap.closest('.pkg-card');
+
+                btns.forEach(btn => {
+                    btn.addEventListener('click', () => {
+                        const type = btn.dataset.type;
+
+                        // Update active state ONLY in this toggle wrap
+                        btns.forEach(b => b.classList.toggle('active', b === btn));
+
+                        // Rolling Counter (Odometer) Effect
+                        if (card && card.dataset.monthly) {
+                            const amountEl = card.querySelector('.pkg-amount');
+                            const periodEl = card.querySelector('.pkg-period');
+
+                            const targetValStr = type === 'monthly' ? card.dataset.monthly : card.dataset.quarterly;
+                            const targetVal = parseInt(targetValStr.replace(/,/g, ''));
+                            const periodText = type === 'monthly' ? '/ month' : '/ quarter';
+
+                            // Get current value
+                            const startVal = parseInt(amountEl.textContent.replace(/,/g, '')) || 0;
+                            const duration = 800; // 0.8 seconds
+                            let startTime = null;
+
+                            function animatePrice(currentTime) {
+                                if (!startTime) startTime = currentTime;
+                                const progress = Math.min((currentTime - startTime) / duration, 1);
+
+                                // Easing: Ease Out Expo
+                                const easedProgress = progress === 1 ? 1 : 1 - Math.pow(2, -10 * progress);
+                                const currentVal = Math.floor(easedProgress * (targetVal - startVal) + startVal);
+
+                                amountEl.textContent = currentVal.toLocaleString();
+
+                                if (progress < 1) {
+                                    requestAnimationFrame(animatePrice);
+                                } else {
+                                    amountEl.textContent = targetVal.toLocaleString();
+                                }
+                            }
+
+                            requestAnimationFrame(animatePrice);
+                            if (periodEl) periodEl.textContent = periodText;
+                        }
+                    });
+                });
+            });
+        })();
+    </script>
+    <!-- ═══ CONTACT SECTION ═══ -->
+    <section id="contact" class="reveal-up">
+        <div class="contact-container">
+            <div class="projects-section-header" style="margin-bottom: 80px;">
+                <div>
+                    <p class="ps-label">Get In Touch</p>
+                    <h2 class="ps-title">CON<span>TACT</span></h2>
+                </div>
+            </div>
+
+            <div class="contact-content">
+                <div class="contact-info">
+                    <div class="info-item">
+                        <span class="info-label">Email us</span>
+                        <a href="mailto:hello@dfx.com" class="info-link">hello@dfx.com</a>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">Call us</span>
+                        <a href="tel:+1234567890" class="info-link">+1 234 567 890</a>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">Follow us</span>
+                        <div class="info-socials">
+                            <a href="#">In</a>
+                            <a href="#">Ig</a>
+                            <a href="#">Li</a>
+                            <a href="#">X</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="contact-cta-box">
+                    <p class="cta-text">Ready to start your journey with DFX?</p>
+                    <button class="btn btn-contact-main" onclick="openBookingModal()">
+                        Book a Call
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <line x1="7" y1="17" x2="17" y2="7" />
+                            <polyline points="7 7 17 7 17 17" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ── FOOTER ── -->
+    <footer class="main-footer">
+        <div class="footer-grid">
+            <div class="footer-brand">
+                <img src="https://res.cloudinary.com/drkgkgiat/image/upload/v1772543577/Web_logo-02_w0fxrq.png"
+                    alt="DFX" class="footer-logo">
+                <p class="footer-tagline">Bold branding for modern creators. We build digital experiences that demand
+                    attention.</p>
+                <div class="footer-socials">
+                    <a href="#" class="social-link">In</a>
+                    <a href="#" class="social-link">Ig</a>
+                    <a href="#" class="social-link">Li</a>
+                    <a href="#" class="social-link">X</a>
+                </div>
+            </div>
+
+            <div class="footer-col">
+                <h4 class="footer-col-title">Explore</h4>
+                <ul class="footer-links">
+                    <li><a href="#services-section">Services</a></li>
+                    <li><a href="#projects">Projects</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="#packages">Packages</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-col">
+                <h4 class="footer-col-title">Connect</h4>
+                <ul class="footer-links">
+                    <li><a href="mailto:hello@dfx.com">hello@dfx.com</a></li>
+                    <li><a href="tel:+1234567890">+1 234 567 890</a></li>
+                    <li><a href="#">Support</a></li>
+                    <li><a href="#">Enquiries</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <div class="copyright">&copy; 2026 DFX STUDIO. ALL RIGHTS RESERVED.</div>
+            <div class="footer-legal">
+                <a href="#">Privacy Policy</a>
+                <a href="#">Terms of Service</a>
+                <a href="#">MADE BY DFX</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- ── BOOKING MODAL ── -->
+    <div class="modal-overlay" id="bookingModal">
+        <div class="modal-container">
+            <button class="modal-close" onclick="closeBookingModal()">✕</button>
+
+            <!-- STEP 1: CALENDAR -->
+            <div class="modal-step active" id="stepCalendar">
+                <div class="calendar-sidebar">
+                    <div class="cal-profile">
+                        <img src="https://res.cloudinary.com/drkgkgiat/image/upload/v1772543577/Web_logo-02_w0fxrq.png"
+                            alt="DFX">
+                        <span class="cal-user">DFX Studio</span>
+                        <h2 class="cal-title">Discovery Session</h2>
+                        <p class="cal-desc">Book a 15-minute intro call to discuss your branding needs and see how we
+                            can work together.</p>
+
+                        <div class="cal-info-item">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2">
+                                <circle cx="12" cy="12" r="10" />
+                                <polyline points="12 6 12 12 16 14" />
+                            </svg>
+                            15 Min Call
+                        </div>
+                        <div class="cal-info-item">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2">
+                                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+                            </svg>
+                            Secure Booking
+                        </div>
+                    </div>
+                </div>
+
+                <div class="calendar-main">
+                    <div class="cal-header">
+                        <span class="cal-month">March 2026</span>
+                        <div class="cal-nav">
+                            <button class="cal-nav-btn">←</button>
+                            <button class="cal-nav-btn">→</button>
+                        </div>
+                    </div>
+                    <div class="cal-grid" id="calendarGrid">
+                        <!-- Days dynamically injected -->
+                    </div>
+                </div>
+
+                <div class="calendar-slots">
+                    <h3 class="slot-title">Mon 16</h3>
+                    <div class="slots-list">
+                        <button class="slot-btn">2:00pm</button>
+                        <button class="slot-btn">2:10pm</button>
+                        <button class="slot-btn">2:30pm</button>
+                        <button class="slot-btn">2:40pm</button>
+                        <button class="slot-btn">2:50pm</button>
+                        <button class="slot-btn">3:00pm</button>
+                        <button class="slot-btn">3:10pm</button>
+                        <button class="slot-btn">3:20pm</button>
+                        <button class="slot-btn">3:30pm</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- STEP 2: FORM -->
+            <div class="modal-step" id="stepForm">
+                <div class="booking-form-wrap">
+                    <h2 class="form-title">Your Details</h2>
+                    <p class="form-sub" id="bookingSummary">Please provide your info to confirm the booking.</p>
+
+                    <div class="form-group">
+                        <label class="form-label">Full Name</label>
+                        <input type="text" class="form-input" placeholder="Enter your name">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Email Address</label>
+                        <input type="email" class="form-input" placeholder="your@email.com">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Subject</label>
+                        <input type="text" class="form-input" placeholder="What are we talking about?">
+                    </div>
+
+                    <div class="form-btns">
+                        <button class="btn-prev" onclick="goToStep(1)">Back</button>
+                        <button class="btn-next-step" onclick="completeBooking()">Book Now</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function openBookingModal() {
+            const modal = document.getElementById('bookingModal');
+            modal.style.display = 'flex';
+            setTimeout(() => modal.classList.add('active'), 10);
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeBookingModal() {
+            const modal = document.getElementById('bookingModal');
+            modal.classList.remove('active');
+            setTimeout(() => {
+                modal.style.display = 'none';
+                document.body.style.overflow = '';
+                goToStep(1); // Reset to calendar
+            }, 400);
+        }
+
+        function goToStep(step) {
+            document.querySelectorAll('.modal-step').forEach(s => s.classList.remove('active'));
+            if (step === 1) document.getElementById('stepCalendar').classList.add('active');
+            if (step === 2) document.getElementById('stepForm').classList.add('active');
+        }
+
+        function completeBooking() {
+            // Simply redirect to home as requested
+            window.location.href = 'index.html';
+        }
+
+        // Attach to buttons
+        document.addEventListener('DOMContentLoaded', () => {
+            // Main buttons
+            const btns = document.querySelectorAll('.btn, .btn-calendar, .testi-cta');
+            btns.forEach(btn => {
+                // Ignore "See Projects" and "Contact" buttons
+                const btnText = btn.innerText.toLowerCase();
+                if (btnText.includes('see projects') || btnText === 'contact') return;
+
+                btn.addEventListener('click', (e) => {
+                    if (btn.tagName === 'A') e.preventDefault();
+                    openBookingModal();
+                });
+            });
+
+            // Calendar State
+            let selectedDateStr = "";
+            let selectedTime = "";
+
+            // Dynamic Calendar Logic
+            let currentDate = new Date();
+            let calendarDate = new Date();
+
+            function renderCalendar() {
+                const monthEl = document.querySelector('.cal-month');
+                const gridEl = document.getElementById('calendarGrid');
+                const slotTitleEl = document.querySelector('.slot-title');
+
+                const year = calendarDate.getFullYear();
+                const month = calendarDate.getMonth();
+
+                const monthNames = ["January", "February", "March", "April", "May", "June",
+                    "July", "August", "September", "October", "November", "December"];
+                monthEl.textContent = `${monthNames[month]} ${year}`;
+
+                gridEl.innerHTML = '';
+                const daysLabels = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+                daysLabels.forEach(day => {
+                    const label = document.createElement('div');
+                    label.className = 'cal-day-label';
+                    label.textContent = day;
+                    gridEl.appendChild(label);
+                });
+
+                const firstDayOfMonth = new Date(year, month, 1).getDay();
+                const daysInMonth = new Date(year, month + 1, 0).getDate();
+
+                // Empty slots for previous month
+                for (let i = 0; i < firstDayOfMonth; i++) {
+                    const empty = document.createElement('div');
+                    empty.className = 'cal-day empty';
+                    gridEl.appendChild(empty);
+                }
+
+                for (let i = 1; i <= daysInMonth; i++) {
+                    const dayEl = document.createElement('div');
+                    dayEl.className = 'cal-day';
+                    dayEl.textContent = i;
+
+                    const dateCheck = new Date(year, month, i);
+                    if (dateCheck < new Date().setHours(0, 0, 0, 0)) {
+                        dayEl.classList.add('past');
+                    } else if (dateCheck.toDateString() === new Date().toDateString()) {
+                        dayEl.classList.add('active'); // Start with today selected
+                        updateSlots(i, month, year);
+                    }
+
+                    dayEl.addEventListener('click', () => {
+                        if (dayEl.classList.contains('past')) return;
+                        document.querySelectorAll('.cal-day').forEach(d => d.classList.remove('active'));
+                        dayEl.classList.add('active');
+                        updateSlots(i, month, year);
+                    });
+
+                    gridEl.appendChild(dayEl);
+                }
+            }
+
+            function updateSlots(day, month, year) {
+                const days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+                const months = ["January", "February", "March", "April", "May", "June",
+                    "July", "August", "September", "October", "November", "December"];
+                const date = new Date(year, month, day);
+                const dayName = days[date.getDay()];
+                document.querySelector('.slot-title').innerText = `${dayName} ${day}`;
+                selectedDateStr = `${dayName} ${day} ${months[month]}`;
+            }
+
+            document.querySelector('.cal-nav-btn:first-child').addEventListener('click', () => {
+                calendarDate.setMonth(calendarDate.getMonth() - 1);
+                renderCalendar();
+            });
+
+            document.querySelector('.cal-nav-btn:last-child').addEventListener('click', () => {
+                calendarDate.setMonth(calendarDate.getMonth() + 1);
+                renderCalendar();
+            });
+
+            renderCalendar();
+
+            const slotButtons = document.querySelectorAll('.slot-btn');
+
+            slotButtons.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    slotButtons.forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    selectedTime = btn.innerText;
+
+                    // Update summary in form step
+                    document.getElementById('bookingSummary').innerText = `Confirming booking for ${selectedDateStr} at ${selectedTime}.`;
+
+                    // AUTO TRANSITION
+                    setTimeout(() => {
+                        goToStep(2);
+                    }, 300);
+                });
+            });
+            // Adaptive Navbar Logic
+            const navbar = document.querySelector('.navbar');
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 150) {
+                    navbar.classList.add('scrolled');
+                } else {
+                    navbar.classList.remove('scrolled');
+                }
+            });
+        });
+    </script>
+    </script>
+</body>
+
+</html>
